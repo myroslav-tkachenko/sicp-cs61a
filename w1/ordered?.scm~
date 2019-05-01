@@ -1,4 +1,0 @@
-#lang planet dyoo/simply-scheme:2
-
-(define (ordered? sent)
-  ())

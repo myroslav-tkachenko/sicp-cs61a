@@ -1,3 +1,0 @@
-#lang planet dyoo/simply-scheme:2
-
-(last 'the)
