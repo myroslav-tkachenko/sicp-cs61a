@@ -1,0 +1,11 @@
+#lang planet dyoo/simply-scheme:2
+
+(define (sum-of-factors sent)
+  (define (sum-iter sent a)
+    (if (empty? sent)
+        a
+        (sum-iter (bf sent) (+ a (first sent)))))
+  (sum-iter sent 0))
+
+(define (next-perf n)
+  

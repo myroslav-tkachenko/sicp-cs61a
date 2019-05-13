@@ -36,6 +36,9 @@
 (define (sqrt-n x)
   (newtons-method (lambda (y) (- (* y y) x)) 1.0))
 
+;;;
+(define (square x) (* x x))
+(define (inc x) (+ x 1))
 ;;; 1.40
 (define (cubic a b c)
   (lambda (x) (+ (* x x x) (* a (* x x)) (* b x) c)))
@@ -43,3 +46,71 @@
 ;;; 1.41
 (define (double f)
   (lambda (x) (f (f x))))
+
+;;; 1.42
+(define (compose f g)
+  (lambda (x) (f (g x))))
+
+;;; 1.43
+;(define (repeated f n)
+;  (lambda (x)
+;    (define (repeat f n a)
+;      (if (< 1 n)
+;          (f a)
+;          (repeat f (- n 1) (f a))))
+;    (repeat f n (f x))))
+
+
+(define (repeated f n)
+  (if (< n 2)
+      f
+      (compose f (repeated f (- n 1)))))
+
+;;; 1.46
+(define (improve guess x)
+  (average guess (/ x guess)))
+(define (good-enough? guess x)
+  (< (abs (- (square guess) x)) 0.001))
+
+(define (iterative-improve t i)
+  (lambda (x)
+    (define (improve t i g r)
+      (if (t g r)
+          g
+          (improve t i (i g r) r)))
+    (improve t i 1.0 x)))
+
+;;; every
+(define (my-every f s)
+  (cond ((empty? s) (se '()))
+        ((empty? (bf s)) (se (f (first s))))
+        (else (se (f (first s)) (my-every f (bf s))))))
+
+;;; 1.35
+(define (fi)
+  (fixed-point (lambda (y) (+ 1 (/ 1 y)))
+               (/ (+ 1 (sqrt 5)) 2)))
+
+
+;;; 1.37
+(define (cont-frac n d k)
+  (define (next-frac i)
+    (if (= i k)
+        (/ (n i) (d i))
+        (/ (n i) (+ (d i) (next-frac (+ i 1))))))
+  (next-frac 1))
+
+;(define (cont-frac n d k)
+;  (define (next-frac-iter i a)
+;    (if (> i k)
+;        a
+;        (next-frac-iter (+ i 1)
+;                        (/ (n i) (+ (d i) a)))))
+;  (next-frac-iter 0 1))
+
+(define (d-i i)
+  (cond ((= i 2) 2)
+        ((= i 5) 4)
+        ((= i 8) 6)
+        ((= i 11) 8)
+        (else 1)))
