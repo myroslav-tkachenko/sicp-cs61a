@@ -56,3 +56,20 @@
 
 (define (dot-product v w)
   (accumulate + 0 (map * v w)))
+
+
+;;; 2.54
+
+(define (equal? a b)
+  (define (compare fa fb r)
+    (if (empty? fa)
+        r
+        (compare (cdr fa) (cdr fb) (and r (eq? (car fa) (car fb))))))
+  
+  (let ((flat-a (enumerate-tree a))
+        (flat-b (enumerate-tree b))
+        (count-flat-a (count (enumerate-tree a)))
+        (count-flat-b (count (enumerate-tree b))))
+    (if (not (= count-flat-a count-flat-b))
+        #f
+        (compare flat-a flat-b #t))))
