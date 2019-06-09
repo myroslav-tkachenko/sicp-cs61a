@@ -1,0 +1,2 @@
+#lang planet dyoo/simply-scheme:2
+(load "obj.scm")
