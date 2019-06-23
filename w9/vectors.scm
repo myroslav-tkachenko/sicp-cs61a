@@ -22,3 +22,30 @@
 					(loop (+ i 1)))))
 		(loop 0)
 		new-vector))
+
+(define (bubble-sort! vec)
+	(define (swap i)
+		(let ((a (vector-ref vec i))
+			 (b (if (= (+ i 1) (vector-length vec))
+				 #f
+                 (vector-ref vec (+ i 1)))))
+			 (if (and b (> a b))
+				 (begin
+                 	(vector-set! vec i b)
+                    (vector-set! vec (+ i 1) a))
+				 vec)))
+                  
+	(define (sort to)
+		(define (move-items i)
+			(if (> i to)
+				vec
+				(begin
+				   (swap i)
+                   (move-items (+ i 1)))))
+		(if (<= to 0) 
+			vec
+			(begin
+				(move-items 0)
+				(sort (- to 1)))))
+	(sort (- (vector-length vec) 1))
+    vec)
